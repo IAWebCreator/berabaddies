@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BERA BADDIES - Meme Token</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --sunshine-yellow: #FFD700;
+            --ocean-blue: #1E90FF;
+            --leather-black: #242424;
+            --gray: #808080;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--sunshine-yellow);
+            color: var(--leather-black);
+            overflow-x: hidden;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--ocean-blue);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-family: 'Bangers', cursive;
+            font-size: 2.5em;
+            color: var(--sunshine-yellow);
+            text-shadow: 2px 2px var(--leather-black);
+        }
+        
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        
+        nav ul li a {
+            color: var(--sunshine-yellow);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--leather-black);
+            transform: scale(1.1);
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('./logo.png') no-repeat center center;
+            background-size: contain;
+        }
+        
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: var(--leather-black);
+            text-shadow: 2px 2px var(--sunshine-yellow);
+        }
+        
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+        
+        .cta-button {
+            background-color: var(--ocean-blue);
+            color: var(--sunshine-yellow);
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--leather-black);
+            transform: scale(1.1);
+        }
+        
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section h2 {
+            font-family: 'Bangers', cursive;
+            font-size: 3em;
+            margin-bottom: 30px;
+            color: var(--ocean-blue);
+            text-shadow: 2px 2px var(--leather-black);
+        }
+        
+        .tokenomics-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .tokenomics-list li {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: var(--ocean-blue);
+            color: var(--sunshine-yellow);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .tokenomics-list li:hover {
+            transform: translateX(10px);
+            background-color: var(--leather-black);
+        }
+        
+        .how-to-buy-steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            width: 200px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .step-icon {
+            font-size: 3em;
+            color: var(--ocean-blue);
+            margin-bottom: 15px;
+        }
+        
+        .roadmap {
+            position: relative;
+        }
+        
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            background-color: var(--ocean-blue);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .roadmap-item {
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .roadmap-content {
+            background-color: var(--ocean-blue);
+            color: var(--sunshine-yellow);
+            padding: 20px;
+            border-radius: 5px;
+            width: 45%;
+            position: relative;
+        }
+        
+        .roadmap-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--ocean-blue);
+            top: 50%;
+            transform: rotate(45deg) translateY(-50%);
+        }
+        
+        .roadmap-item:nth-child(odd) .roadmap-content {
+            margin-left: auto;
+        }
+        
+        .roadmap-item:nth-child(odd) .roadmap-content::after {
+            left: -10px;
+        }
+        
+        .roadmap-item:nth-child(even) .roadmap-content::after {
+            right: -10px;
+        }
+        
+        footer {
+            background-color: var(--leather-black);
+            color: var(--sunshine-yellow);
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .social-links a {
+            color: var(--sunshine-yellow);
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--ocean-blue);
+            transform: scale(1.2);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#tokenomics">Tokenomics</a></li>
+                    <li><a href="#how-to-buy">How to Buy</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h1 class="logo floating">BERA BADDIES</h1>
+                <p>Leather-jacket-clad bear baddies crash a blockchain beach bash, cheekily mocking the celebrity-studded crypto scene!</p>
+                <button class="cta-button">Join the Party</button>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container">
+                <h2>About BERA BADDIES</h2>
+                <p>We're not your average crypto project. We're the wild bunch that's here to shake things up and have a blast doing it! Picture this: a gang of mischievous bears in leather jackets, crashing the hottest blockchain beach party in town. We're here to poke fun at the celebrity-obsessed crypto world and remind everyone that it's all about having a good time!</p>
+            </div>
+        </section>
+
+        <section id="tokenomics" class="section">
+            <div class="container">
+                <h2>TOKENOMICS</h2>
+                <ul class="tokenomics-list">
+                    <li>Total Supply: 1,000,000,000 BADDIE</li>
+                    <li>5% Party Tax: Fueling our epic beach bashes!</li>
+                    <li>3% Liquidity: Keeping the party flowing smoothly</li>
+                    <li>2% Burn: Some BADDIEs just can't handle the heat!</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="how-to-buy" class="section">
+            <div class="container">
+                <h2>HOW TO BUY</h2>
+                <div class="how-to-buy-steps">
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-wallet"></i></div>
+                        <h3>Get a Wallet</h3>
+                        <p>Download a reputable Ethereum wallet like MetaMask or Trust Wallet.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-coins"></i></div>
+                        <h3>Acquire ETH</h3>
+                        <p>Purchase Ethereum (ETH) from a cryptocurrency exchange like Coinbase or Binance.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-exchange-alt"></i></div>
+                        <h3>Connect to a DEX</h3>
+                        <p>Connect your wallet to a decentralized exchange (DEX) like Uniswap or SushiSwap.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-shopping-cart"></i></div>
+                        <h3>Swap ETH for BADDIE</h3>
+                        <p>Use the DEX's swap feature to exchange your ETH for BADDIE tokens.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="section">
+            <div class="container">
+                <h2>ROADMAP</h2>
+                <div class="roadmap">
+                    <div class="roadmap-item">
+                        <div class="roadmap-content">
+                            <h3>Phase 1: Beach Party Launch</h3>
+                            <p>We're kicking off with the wildest blockchain beach bash ever seen! Building our baddie community and making waves in the crypto scene.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-content">
+                            <h3>Phase 2: Celebrity Mockery Marketing</h3>
+                            <p>Time to turn up the heat! We're launching cheeky marketing campaigns that playfully poke fun at celebrity crypto endorsements. Partnerships with fellow mischief-makers incoming!</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-content">
+                            <h3>Phase 3: BADDIE Beach Club</h3>
+                            <p>Developing exclusive features for our community, including virtual beach parties, BADDIE merchandise, and more ways to embrace the rebellious spirit!</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-content">
+                            <h3>Phase 4: Global Takeover</h3>
+                            <p>BERA BADDIES go international! We're crashing parties worldwide, expanding our reach, and bringing the fun to every corner of the crypto universe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>BADDIE Token Address: 0x1234...5678 <i class="fas fa-copy"></i></p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fas fa-chart-line"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fas fa-search-dollar"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/babel">
+        // React Component
+        function FloatingBear() {
+            return (
+                <div className="floating-bear">
+                    <img src="./logo.png" alt="BERA BADDIE" />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<FloatingBear />, document.getElementById('react-root'));
+
+        // Particles.js
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000000" }, polygon: { nb_sides: 5 } },
+                opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
+                size: { value: 3, random: true, anim: { enable: false, speed: 40,
